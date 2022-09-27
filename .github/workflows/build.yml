@@ -68,8 +68,8 @@ jobs:
       - name: Test
         run: mvn -B jar:jar surefire:test
 
-      - name: Deploy
-        env:
-          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-        run: mvn deploy -DskipTests -s .github/workflows/settings.xml
+      #- name: Deploy
+      #  env:
+      #    NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+      #    NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+      #  run: mvn deploy -DskipTests -s .github/workflows/settings.xml
