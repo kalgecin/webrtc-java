@@ -4,7 +4,7 @@
 
 	<groupId>dev.onvoid.webrtc</groupId>
 	<artifactId>webrtc-java-parent</artifactId>
-	<version>0.7.0-SNAPSHOT</version>
+	<version>0.8.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>webrtc-java-parent</name>
@@ -63,7 +63,6 @@
 	<modules>
 		<module>webrtc-jni</module>
 		<module>webrtc</module>
-		<module>webrtc-demo</module>
 	</modules>
 
 	<build>
@@ -78,9 +77,35 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.8.1</version>
+					<version>3.10.1</version>
+					<executions>
+						<execution>
+							<id>default-compile</id>
+							<configuration>
+								<release>9</release>
+								<!-- No excludes: compile everything to ensure module-info contains right entries -->
+							</configuration>
+						</execution>
+						<execution>
+							<id>base-compile</id>
+							<goals>
+								<goal>compile</goal>
+							</goals>
+							<configuration>
+								<!-- Recompile everything for target VM except the module-info.java -->
+								<excludes>
+									<exclude>module-info.java</exclude>
+								</excludes>
+							</configuration>
+						</execution>
+					</executions>
+					<!-- Defaults for compile and testCompile -->
 					<configuration>
-						<release>11</release>
+						<release>8</release><!-- compatibility expectations -->
+						<!-- Only required when haven't configured the maven-toolchains-plugin -->
+						<jdkToolchain>
+							<version>9</version>
+						</jdkToolchain>
 						<showDeprecation>true</showDeprecation>
 						<showWarnings>true</showWarnings>
 						<fork>true</fork>
@@ -235,6 +260,12 @@
 					</plugin>
 				</plugins>
 			</build>
+		</profile>
+		<profile>
+			<id>demo</id>
+			<modules>
+				<module>webrtc-demo</module>
+			</modules>
 		</profile>
 		<profile>
 			<id>windows-x86_64</id>

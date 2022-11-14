@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Alex Andres
+ * Copyright 2022 Alex Andres
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,33 +14,22 @@
  * limitations under the License.
  */
 
-#ifndef JNI_MACOS_MAC_UTILS_H_
-#define JNI_MACOS_MAC_UTILS_H_
+package dev.onvoid.webrtc.media;
 
-#include "Exception.h"
+/**
+ * This listener gets notified whenever a track, on which this listener is
+ * registered, ends.
+ *
+ * @author Alex Andres
+ */
+@FunctionalInterface
+public interface MediaStreamTrackEndedListener {
 
-#include <string>
+	/**
+	 * The given track ended.
+	 *
+	 * @param track The ended track.
+	 */
+	void onTrackEnd(MediaStreamTrack track);
 
-#import <Foundation/Foundation.h>
-
-
-inline void ThrowIfFailed(OSStatus status, const char * msg, ...)
-{
-	if (status != noErr) {
-		char message[256];
-
-		va_list args;
-		va_start(args, msg);
-		vsnprintf(message, 256, msg, args);
-		va_end(args);
-
-		throw jni::Exception("%s Status: %d", message, status);
-	}
 }
-
-namespace jni
-{
-	const std::string CFStringRefToUTF8(CFStringRef stringRef);
-}
-
-#endif

@@ -55,7 +55,7 @@ namespace jni
 			{
 			}
 
-			jobject toJava(JNIEnv * env, const T & nativeType)
+			JavaLocalRef<jobject> toJava(JNIEnv * env, const T & nativeType) const
 			{
 				jsize index = static_cast<jsize>(nativeType);
 
@@ -64,10 +64,10 @@ namespace jni
 					return nullptr;
 				}
 
-				return env->GetObjectArrayElement(values, index);
+				return JavaLocalRef<jobject>(env, env->GetObjectArrayElement(values, index));
 			}
 
-			T toNative(JNIEnv * env, const jobject & javaType)
+			T toNative(JNIEnv * env, const jobject & javaType) const
 			{
 				const auto enumClass = JavaClasses::get<JavaEnumClass>(env);
 

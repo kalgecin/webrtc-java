@@ -96,10 +96,10 @@ namespace jni
 					throw Exception("JavaEnum for [%s] was not registered", typeid(T).name());
 				}
 
-				const unique_void_ptr & p = found->second;
-				JavaEnum<T> * e = static_cast<JavaEnum<T> *>(p.get());
+				unique_void_ptr & p = found->second;
+				const JavaEnum<T> * e = static_cast<JavaEnum<T> *>(p.get());
 
-				return JavaLocalRef<jobject>(env, e->toJava(env, nativeType));
+				return e->toJava(env, nativeType);
 			}
 
 			template <class T>
@@ -113,8 +113,8 @@ namespace jni
 					throw Exception("JavaEnum for [%s] was not registered", typeid(T).name());
 				}
 
-				const unique_void_ptr & p = found->second;
-				JavaEnum<T> * e = static_cast<JavaEnum<T> *>(p.get());
+				unique_void_ptr & p = found->second;
+				const JavaEnum<T> * e = static_cast<JavaEnum<T> *>(p.get());
 
 				return e->toNative(env, javaType);
 			}
