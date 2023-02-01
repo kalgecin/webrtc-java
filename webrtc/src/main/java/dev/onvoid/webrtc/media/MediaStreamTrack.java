@@ -29,6 +29,13 @@ import dev.onvoid.webrtc.internal.DisposableNativeObject;
 public abstract class MediaStreamTrack extends DisposableNativeObject {
 
 	/**
+	 * Field used to store a pointer to the native listener. Don't modify this
+	 * value directly, or else you risk causing segfaults or memory leaks.
+	 */
+	@SuppressWarnings("unused")
+	private long listenerNativeHandle;
+
+	/**
 	 * If this object represents an audio track.
 	 */
 	public static final String AUDIO_TRACK_KIND = "audio";
@@ -41,6 +48,42 @@ public abstract class MediaStreamTrack extends DisposableNativeObject {
 
 	protected MediaStreamTrack() {
 
+	}
+
+	/**
+	 * Add a listener to observe the mute condition of this track.
+	 *
+	 * @param listener The listener to add.
+	 */
+	public void addTrackMuteListener(MediaStreamTrackMuteListener listener) {
+		addMuteEventListener(listener);
+	}
+
+	/**
+	 * Remove a listener that observes the mute condition of this track.
+	 *
+	 * @param listener The listener to remove.
+	 */
+	public void removeTrackMuteListener(MediaStreamTrackMuteListener listener) {
+		removeMuteEventListener(listener);
+	}
+
+	/**
+	 * Add a listener to get notified when this track ends.
+	 *
+	 * @param listener The listener to add.
+	 */
+	public void addTrackEndedListener(MediaStreamTrackEndedListener listener) {
+		addEndedEventListener(listener);
+	}
+
+	/**
+	 * Remove a listener that gets notified when this track ends.
+	 *
+	 * @param listener The listener to remove.
+	 */
+	public void removeTrackEndedListener(MediaStreamTrackEndedListener listener) {
+		removeEndedEventListener(listener);
 	}
 
 	@Override
@@ -89,5 +132,11 @@ public abstract class MediaStreamTrack extends DisposableNativeObject {
 	 * @return The current media track state.
 	 */
 	public native MediaStreamTrackState getState();
+
+	private native void addEndedEventListener(MediaStreamTrackEndedListener listener);
+	private native void removeEndedEventListener(MediaStreamTrackEndedListener listener);
+
+	private native void addMuteEventListener(MediaStreamTrackMuteListener listener);
+	private native void removeMuteEventListener(MediaStreamTrackMuteListener listener);
 
 }
