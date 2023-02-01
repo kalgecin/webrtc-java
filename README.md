@@ -9,7 +9,7 @@ Java native interface implementation based on the free, open [WebRTC](https://we
 <dependency>
     <groupId>dev.onvoid.webrtc</groupId>
     <artifactId>webrtc-java</artifactId>
-    <version>0.6.0</version>
+    <version>0.7.0</version>
 </dependency>
 ```
 
