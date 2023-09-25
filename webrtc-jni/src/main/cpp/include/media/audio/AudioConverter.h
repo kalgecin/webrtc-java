@@ -16,6 +16,10 @@
 
 #ifndef JNI_WEBRTC_MEDIA_AUDIO_CONVERTER_H_
 #define JNI_WEBRTC_MEDIA_AUDIO_CONVERTER_H_
+#define DISALLOW_COPY_AND_ASSIGN(cclass) \
+private:        \
+cclass(const cclass &); \
+cclass& operator=(const cclass &);
 
 #include "JavaClass.h"
 #include "JavaRef.h"

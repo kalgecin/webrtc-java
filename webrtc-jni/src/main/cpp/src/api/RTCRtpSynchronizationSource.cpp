@@ -29,7 +29,7 @@ namespace jni
 		{
 			const auto javaClass = JavaClasses::get<JavaRTCRtpSynchronizationSourceClass>(env);
 
-			jlong timestamp = static_cast<jlong>(source.timestamp_ms());
+			jlong timestamp = static_cast<jlong>(source.timestamp().ms());
 			jlong sourceId = static_cast<jlong>(source.source_id());
 			jdouble audioLevel = static_cast<jdouble>(source.audio_level().value_or(0));
 			jlong rtpTimestamp = static_cast<jlong>(source.rtp_timestamp());
@@ -49,7 +49,7 @@ namespace jni
 			JavaObject obj(env, source);
 
             return webrtc::RtpSource(
-                    static_cast<int64_t>(obj.getLong(parentClass->timestamp)),
+                    webrtc::Timestamp::Millis(static_cast<int64_t>(obj.getLong(parentClass->timestamp))),
                     static_cast<uint32_t>(obj.getLong(parentClass->source)),
                     webrtc::RtpSourceType::CSRC,
                     static_cast<uint32_t>(obj.getLong(parentClass->rtpTimestamp)),

@@ -28,7 +28,7 @@ if(NOT DEFINED WEBRTC_SRC_DIR)
 	if(DEFINED ENV{CTEST_REAL_HOME})
 		set(WEBRTC_SRC_DIR "$ENV{CTEST_REAL_HOME}")
 	else()
-		set(WEBRTC_SRC_DIR "$ENV{HOME}")
+		set(WEBRTC_SRC_DIR "$ENV{HOME}/webrtc")
 	endif()
 
 	if(NOT WEBRTC_SRC_DIR AND WIN32)
@@ -77,7 +77,7 @@ endfunction()
 function(sysroot_link)
 	message(STATUS "Retrieving libm.so from sysroot")
 	execute_process(
-		COMMAND find src/build/linux/debian_sid_amd64-sysroot -iname libm-*.so
+		COMMAND find src/build/linux/debian_bullseye_amd64-sysroot -iname libm-*.so
 		WORKING_DIRECTORY "${WEBRTC_SRC_DIR}"
 		OUTPUT_VARIABLE COMMAND_OUTPUT
 		ERROR_VARIABLE COMMAND_ERROR
@@ -203,7 +203,7 @@ if (PATCHES)
 endif()
 
 message(STATUS "WebRTC: generate")
-set(COMPILE_ARGS "is_debug=false target_cpu=\"${TARGET_CPU}\" treat_warnings_as_errors=false rtc_build_examples=false rtc_include_tests=false use_rtti=true use_custom_libcxx=false symbol_level=0 rtc_use_h264=true use_lld=false")
+set(COMPILE_ARGS "is_debug=false target_cpu=\"${TARGET_CPU}\" treat_warnings_as_errors=false rtc_build_examples=false rtc_include_tests=false use_rtti=true use_custom_libcxx=false symbol_level=0 rtc_use_h264=true use_lld=false grpc_use_static_linking=true")
 execute_command(
 	COMMAND gn gen ${WEBRTC_BUILD} --args=${COMPILE_ARGS}
 	WORKING_DIRECTORY "${WEBRTC_SRC}"
@@ -239,10 +239,11 @@ install(
 		REGEX /src/style-guide/ EXCLUDE
 		REGEX /src/test/ EXCLUDE
 		REGEX /src/testing/ EXCLUDE
-		REGEX "/src/third_party/(a[c-z].*|[b-k]|l[a-h|k-z].*|lib[a-x].*|[m-z])" EXCLUDE
+		REGEX "/src/third_party/(a[c-z].*|b[a-q].*|b[s-z].*|[c-k]|l[a-h|k-z].*|lib[a-x].*|[m-z])" EXCLUDE
 		REGEX /src/tools/ EXCLUDE
 		REGEX /src/tools_webrtc/ EXCLUDE
 		REGEX /test/ EXCLUDE
+		REGEX /src/.git EXCLUDE
 )
 # Delete empty directories
 install(CODE "

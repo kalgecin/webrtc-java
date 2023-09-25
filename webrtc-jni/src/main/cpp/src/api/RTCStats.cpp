@@ -98,7 +98,7 @@ namespace jni
 			}
 
 			jobject obj = env->NewObject(javaClass->cls, javaClass->ctor,
-				stats.timestamp_us(),
+				stats.timestamp().us(),
 				type ? type.get() : type,
 				JavaString::toJava(env, stats.id()).get(),
 				((JavaLocalRef<jobject>)memberMap).get());
