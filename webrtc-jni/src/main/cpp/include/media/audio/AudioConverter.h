@@ -56,7 +56,7 @@ namespace jni
 			const size_t dstChannels;
 
 		private:
-        DISALLOW_COPY_AND_ASSIGN(AudioConverter);
+            DISALLOW_COPY_AND_ASSIGN(AudioConverter);
 	};
 }
 
