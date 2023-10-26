@@ -80,13 +80,17 @@ JNIEXPORT void JNICALL Java_dev_onvoid_webrtc_PeerConnectionFactory_initialize
 			webrtc::CreateBuiltinAudioEncoderFactory(),
 			webrtc::CreateBuiltinAudioDecoderFactory(),
             std::make_unique<
-                    webrtc::VideoEncoderFactoryTemplate<webrtc::LibvpxVp8EncoderTemplateAdapter,
-                            webrtc::LibvpxVp9EncoderTemplateAdapter,
-                            webrtc::OpenH264EncoderTemplateAdapter,
+                    webrtc::VideoEncoderFactoryTemplate<
+                            webrtc::LibvpxVp8EncoderTemplateAdapter,
+//                            webrtc::LibvpxVp9EncoderTemplateAdapter,
+//                            webrtc::OpenH264EncoderTemplateAdapter,
                             webrtc::LibaomAv1EncoderTemplateAdapter>>(),
-            std::make_unique<webrtc::VideoDecoderFactoryTemplate<
-                             webrtc::LibvpxVp8DecoderTemplateAdapter, webrtc::LibvpxVp9DecoderTemplateAdapter,
-                             webrtc::OpenH264DecoderTemplateAdapter, webrtc::Dav1dDecoderTemplateAdapter>>(),
+            std::make_unique<
+                    webrtc::VideoDecoderFactoryTemplate<
+                             webrtc::LibvpxVp8DecoderTemplateAdapter,
+//                             webrtc::LibvpxVp9DecoderTemplateAdapter,
+//                             webrtc::OpenH264DecoderTemplateAdapter,
+                             webrtc::Dav1dDecoderTemplateAdapter>>(),
 			nullptr,
 			apm);
 
